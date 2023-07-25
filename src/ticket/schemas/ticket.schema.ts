@@ -12,9 +12,13 @@ export const TicketSchema = new mongoose.Schema({
   updated_at: Date,
   priority: {
     type: String,
-    enum: Object.values(Priority),
+    enum: Priority,
   },
   events: {
     type: Array<EventTicket>,
+  },
+  project_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'PROJECT_MODEL',
   },
 });

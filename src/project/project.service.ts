@@ -18,6 +18,7 @@ export class ProjectService {
 
     createProject.created_at = new Date();
     createProject.updated_at = new Date();
+    createProject.documents = new Array<any>();
     return createProject.save();
   }
 }

@@ -5,4 +5,5 @@ export interface Project extends Document {
   readonly github_url: string;
   created_at: Date;
   updated_at: Date;
+  documents: Array<any>;
 }

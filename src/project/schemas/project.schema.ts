@@ -5,4 +5,5 @@ export const ProjectSchema = new mongoose.Schema({
   github_url: String,
   created_at: Date,
   updated_at: Date,
+  documents: Array<any>,
 });
