@@ -6,6 +6,7 @@ import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { EventTicket } from '../class/Event';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Project } from '../project/interfaces/project.interface';
+
 @Injectable()
 export class TicketService {
   constructor(
@@ -15,7 +16,7 @@ export class TicketService {
     private projectModel: Model<Project>,
   ) {}
 
-  async create(createTicketDto: CreateTicketDto): Promise<Ticket> {
+  async create(createTicketDto: CreateTicketDto, user: any): Promise<Ticket> {
     const createdTicket = new this.ticketModel(createTicketDto);
 
     const projectExist = await this.projectModel
@@ -29,6 +30,8 @@ export class TicketService {
     createdTicket.created_at = new Date();
     createdTicket.updated_at = new Date();
     createdTicket.events = new Array<EventTicket>();
+    createdTicket.creator.id = user._id;
+    createdTicket.creator.email = user.email;
     return createdTicket.save();
   }
 
@@ -42,7 +45,6 @@ export class TicketService {
     if (projectExist === null) {
       throw new NotFoundException('Project not found');
     }
-
 
     if (!ticket) {
       throw new NotFoundException('Ticket not found');

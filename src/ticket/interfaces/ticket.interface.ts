@@ -15,4 +15,8 @@ export interface Ticket extends Document {
   readonly priority: TicketPriority;
   events: Array<EventTicket>;
   project_id: string;
+  creator: {
+    id: string;
+    email: string;
+  };
 }

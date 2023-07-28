@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 import { EventTicket } from '../../class/Event';
+import * as string_decoder from "string_decoder";
 enum Priority {
   LOW = 'low',
   MEDIUM = 'medium',
@@ -20,5 +21,12 @@ export const TicketSchema = new mongoose.Schema({
   project_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'PROJECT_MODEL',
+  },
+  creator: {
+    id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'USER_MODEL',
+    },
+    email: String,
   },
 });

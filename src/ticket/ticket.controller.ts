@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   UseGuards,
+  Request,
   ValidationPipe,
 } from '@nestjs/common';
 import { TicketService } from './ticket.service';
@@ -22,8 +23,11 @@ export class TicketController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body(new ValidationPipe()) createTicketDto: CreateTicketDto) {
-    return this.ticketService.create(createTicketDto);
+  async create(
+    @Body(new ValidationPipe()) createTicketDto: CreateTicketDto,
+    @Request() request: any,
+  ) {
+    return this.ticketService.create(createTicketDto, request.user);
   }
 
   @UseGuards(AuthGuard)
