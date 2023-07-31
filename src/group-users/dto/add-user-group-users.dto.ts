@@ -1,5 +1,4 @@
-import { IsNotEmpty, IsObject, IsEnum, IsString } from "class-validator";
-import { User } from '../../users/interfaces/user.interface';
+import { IsNotEmpty, IsEnum, IsString } from 'class-validator';
 
 enum Role {
   ADMIN = 'admin',
@@ -7,9 +6,9 @@ enum Role {
   VIEWER = 'viewer',
 }
 export class AddUserGroupUsersDto {
-  @IsObject()
+  @IsString()
   @IsNotEmpty()
-  readonly _id: string;
+  readonly user_id: string;
 
   @IsEnum(Role)
   @IsNotEmpty()

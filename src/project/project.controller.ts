@@ -1,10 +1,10 @@
 import {
   Body,
   Controller,
-  Post,
+  Post, Request,
   UseGuards,
-  ValidationPipe,
-} from '@nestjs/common';
+  ValidationPipe
+} from "@nestjs/common";
 import { ProjectService } from './project.service';
 import { CreateProjectDto } from '../project/dto/create-project.dto';
 import { AuthGuard } from '../auth/auth.guard';
@@ -15,7 +15,10 @@ export class ProjectController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async create(@Body(new ValidationPipe()) createProjectDto: CreateProjectDto) {
-    return this.projectService.create(createProjectDto);
+  async create(
+    @Body(new ValidationPipe()) createProjectDto: CreateProjectDto,
+    @Request() request: any,
+  ) {
+    return this.projectService.create(createProjectDto, request.user);
   }
 }

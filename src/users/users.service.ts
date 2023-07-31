@@ -19,4 +19,8 @@ export class UsersService {
     user.password = await argon2.hash(user.password);
     return user.save();
   }
+
+  async getAll(): Promise<Array<User>> {
+    return this.userModel.find({}, { _id: 1, email: 1 });
+  }
 }
