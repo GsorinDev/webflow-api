@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  nestjs:
+    image: registry.georgio-sorin.fr/api-webflow:master-1.0.0
+    container_name: api-webflow
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    environment:
+      - DATABASE_URL=mongodb://mongodb:27017/my_database
+    restart: always
+    labels:
+      - traefik.http.routers.api-webflow.rule=Host(`api-webflow.georgio-sorin.fr`)
+      - traefik.http.routers.api-webflow.tls=true
+      - traefik.http.routers.api-webflow.tls.certresolver=lets-encrypt
+      - traefik.port=3000
+    networks:
+     - web
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+volumes:
+  mongodb_data:
+
+networks:
+  web:
+    external: true
