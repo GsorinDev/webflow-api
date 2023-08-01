@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
-                    sh "docker build -t ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion} ."
+                    sh "sudo docker build -t ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion} ."
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
                 script {
                     sh "docker login -u ${env.DOCKER_REGISTRY_USERNAME} -p ${env.DOCKER_REGISTRY_PASSWORD} ${REGISTRY_URL}"
                     def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
-                    sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion}"
+                    sh "sudo docker push ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion}"
                 }
             }
         }
