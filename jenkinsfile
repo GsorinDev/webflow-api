@@ -10,6 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
+                    ls
                     def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
                     sh "docker build -t ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion} ."
                 }
