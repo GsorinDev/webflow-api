@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+
+    options {
+        skipDefaultCheckout(true)
+    }
+
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
         DOCKER_IMAGE_NAME = "api-webflow"
