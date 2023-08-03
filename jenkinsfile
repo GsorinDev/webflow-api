@@ -9,6 +9,11 @@ pipeline {
     }
 
     stages {
+        stage('Check Docker Version') {
+            steps {
+                sh 'docker --version'
+            }
+        }
         stage('build-branch') {
             steps {
                 script {
