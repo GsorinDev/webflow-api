@@ -7,21 +7,11 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('build-branch') {
             steps {
                 script {
-                    ls
                     def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
                     sh "docker build -t ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion} ."
-                }
-            }
-        }
-
-        stage('Push') {
-            steps {
-                script {
-                    sh "docker login -u ${env.DOCKER_REGISTRY_USERNAME} -p ${env.DOCKER_REGISTRY_PASSWORD} ${REGISTRY_URL}"
-                    def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
                     sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion}"
                 }
             }
