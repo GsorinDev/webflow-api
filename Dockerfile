@@ -1,6 +1,9 @@
 # Use the Node.js image with version 18.10.0 as the base image
 FROM node:18.10.0
 
+ENV DOCKER_USERNAME=env.DOCKER_USERNAME
+ENV DOCKER_PASSWORD=env.DOCKER_PASSWORD
+
 # Set the working directory inside the container
 WORKDIR /app
 
