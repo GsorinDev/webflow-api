@@ -1,6 +1,9 @@
 pipeline {
     agent {
-        dockerfile { dir 'jenkins/agent' }
+        docker {
+            image 'node:latest'
+            args '-p 3000:3000' // Expose port 3000 from the container to the host
+        }
     }
 
     environment {
