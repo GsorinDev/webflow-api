@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:latest'
-            args '-p 3000:3000' // Expose port 3000 from the container to the host
-        }
-    }
+    agent any
 
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
@@ -13,6 +8,12 @@ pipeline {
 
     stages {
         stage('build-branch') {
+            agent {
+                docker {
+                    image 'node:latest'
+                    args '-p 3000:3000' // Expose port 3000 from the container to the host
+                }
+            }
             steps {
                 script {
                     def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
