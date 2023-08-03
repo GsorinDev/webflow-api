@@ -4,6 +4,7 @@ pipeline {
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
         DOCKER_IMAGE_NAME = "api-webflow"
+        DOCKER_CREDENTIALS = credentials('REGISTRY_CREDENTIALS')
     }
 
     stages {
@@ -15,15 +16,11 @@ pipeline {
         stage('build-branch') {
             steps {
                 script {
-                    // Charger les credentials en tant que variables d'environnement
-                    withCredentials([usernamePassword(credentialsId: 'REGISTRY_CREDENTIALS', passwordVariable: 'DOCKER_CREDENTIALS_PSW', usernameVariable: 'DOCKER_CREDENTIALS_USR')]) {
-                        // Utiliser les variables d'environnement dans la commande sh en les passant en tant que paramètres
-                        sh "echo Credentials: ${DOCKER_CREDENTIALS_USR}:${DOCKER_CREDENTIALS_PSW}"
-                        sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW} $REGISTRY_URL"
-                        def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
-                        sh "docker build -t $REGISTRY_URL/$DOCKER_IMAGE_NAME:$packageVersion ."
-                        sh "docker push $REGISTRY_URL/$DOCKER_IMAGE_NAME:$packageVersion"
-                    }
+                    sh "echo ${DOCKER_CREDENTIALS}"
+                    sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW} ${REGISTRY_URL}"
+                    def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
+                    sh "docker build -t ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion} ."
+                    sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion}"
                 }
             }
         }
