@@ -6,7 +6,7 @@ pipeline {
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
         DOCKER_IMAGE_NAME = "api-webflow"
-        PATH = "$PATH:/usr/bin" // Ajoutez ici le chemin d'accès à l'exécutable Docker
+        PATH = "$PATH:/usr/bin/docker" // Ajoutez ici le chemin d'accès à l'exécutable Docker
 
     }
 
