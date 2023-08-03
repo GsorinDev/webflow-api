@@ -4,7 +4,6 @@ pipeline {
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
         DOCKER_IMAGE_NAME = "api-webflow"
-        DOCKER_CREDENTIALS = credentials('REGISTRY_CREDENTIALS')
     }
 
     stages {
@@ -16,7 +15,8 @@ pipeline {
         stage('build-branch') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS', passwordVariable: 'DOCKER_CREDENTIALS_PSW', usernameVariable: 'DOCKER_CREDENTIALS_USR')]) {
+                    // Charger les credentials en tant que variables d'environnement
+                    withCredentials([usernamePassword(credentialsId: 'REGISTRY_CREDENTIALS', passwordVariable: 'DOCKER_CREDENTIALS_PSW', usernameVariable: 'DOCKER_CREDENTIALS_USR')]) {
                         sh "echo $DOCKER_CREDENTIALS_USR $DOCKER_CREDENTIALS_PSW"
                         sh "docker login -u $DOCKER_CREDENTIALS_USR -p $DOCKER_CREDENTIALS_PSW $REGISTRY_URL"
                         def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
