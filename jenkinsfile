@@ -1,13 +1,9 @@
 pipeline {
-    agent {
-        docker { image 'node:18.16.0-alpine' }
-    }
+    agent any
 
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
         DOCKER_IMAGE_NAME = "api-webflow"
-        PATH = "$PATH:/usr/bin/docker" // Ajoutez ici le chemin d'accès à l'exécutable Docker
-
     }
 
     stages {
