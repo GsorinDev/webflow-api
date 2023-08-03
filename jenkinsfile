@@ -16,8 +16,8 @@ pipeline {
         stage('build-branch') {
             steps {
                 script {
-                    sh "echo ${DOCKER_CREDENTIALS_USR} ${DOCKER_CREDENTIALS_PSW} "
-                    sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW}} ${REGISTRY_URL}"
+                    sh "echo ${DOCKER_CREDENTIALS_USR} ${DOCKER_CREDENTIALS_PSW}"
+                    sh "docker login -u ${DOCKER_CREDENTIALS_USR} -p ${DOCKER_CREDENTIALS_PSW} ${REGISTRY_URL}"
                     def packageVersion = readFile('package.json').trim().split('"version": "')[1].split('"')[0]
                     sh "docker build -t ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion} ."
                     sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE_NAME}:${packageVersion}"
