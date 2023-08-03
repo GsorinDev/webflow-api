@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile { dir 'jenkins/agent' }
+    }
 
     environment {
         REGISTRY_URL = "registry.georgio-sorin.fr"
