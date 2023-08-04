@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import process from 'process';
 
 function mongodbLink() {
   if(process.env.MONGO) {
