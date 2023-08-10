@@ -3,7 +3,7 @@ import { Injectable, Inject, NotFoundException } from '@nestjs/common';
 import { Ticket } from './interfaces/ticket.interface';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
-import { EventTicket } from '../class/Event';
+import { EventTicket, TypeEvent } from '../class/Event';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Project } from '../project/interfaces/project.interface';
 
@@ -30,6 +30,7 @@ export class TicketService {
     createdTicket.created_at = new Date();
     createdTicket.updated_at = new Date();
     createdTicket.events = new Array<EventTicket>();
+    createdTicket.events.push(new EventTicket(TypeEvent.BACKLOG, new Date()))
     createdTicket.creator.id = user._id;
     createdTicket.creator.email = user.email;
     return createdTicket.save();

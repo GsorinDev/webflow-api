@@ -2,14 +2,10 @@ version: "3"
 
 services:
   nestjs:
-    image: registry.georgio-sorin.fr/api-webflow:master-1.0.0
+    image: registry.georgio-sorin.fr/api-webflow:0.0.1
     container_name: api-webflow
-    depends_on:
-      - mongodb
-    links:
-      - mongodb
     environment:
-      - DATABASE_URL=mongodb://mongodb:27017/my_database
+      - DATABASE_URL=mongodb://mongodb:27017/nest
     restart: always
     labels:
       - traefik.http.routers.api-webflow.rule=Host(`api-webflow.georgio-sorin.fr`)

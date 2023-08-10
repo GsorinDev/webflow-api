@@ -1,4 +1,4 @@
-enum typeEvent {
+export enum TypeEvent {
   PROD = 'production',
   BEING = 'being',
   BLOCKED = 'blocked',
@@ -8,5 +8,10 @@ enum typeEvent {
 
 export class EventTicket {
   public date: Date;
-  public type: typeEvent;
+  public type: TypeEvent;
+
+  constructor(type : TypeEvent, date: Date) {
+    this.type = type
+    this.date = date
+  }
 }
