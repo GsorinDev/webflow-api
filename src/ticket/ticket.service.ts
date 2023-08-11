@@ -30,9 +30,15 @@ export class TicketService {
     createdTicket.created_at = new Date();
     createdTicket.updated_at = new Date();
     createdTicket.events = new Array<EventTicket>();
-    createdTicket.events.push(new EventTicket(TypeEvent.BACKLOG, new Date()))
+    createdTicket.events.push(new EventTicket(TypeEvent.BACKLOG, new Date()));
     createdTicket.creator.id = user._id;
     createdTicket.creator.email = user.email;
+
+    const id = await this.ticketModel.countDocuments({
+      project_id: createdTicket.project_id,
+    });
+
+    createdTicket.id = `${projectExist.title.substring(0, 4).toUpperCase()}-${id + 1}`;
     return createdTicket.save();
   }
 

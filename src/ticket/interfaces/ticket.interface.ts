@@ -8,6 +8,7 @@ export enum TicketPriority {
 }
 
 export interface Ticket extends Document {
+  readonly id: string;
   readonly title: string;
   readonly description: string;
   created_at: Date;

@@ -1,12 +1,13 @@
 import * as mongoose from 'mongoose';
 import { EventTicket } from '../../class/Event';
-import * as string_decoder from "string_decoder";
+
 enum Priority {
   LOW = 'low',
   MEDIUM = 'medium',
   HIGH = 'high',
 }
 export const TicketSchema = new mongoose.Schema({
+  id: String,
   title: String,
   description: String,
   created_at: Date,

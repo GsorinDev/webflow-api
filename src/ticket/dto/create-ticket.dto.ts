@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEnum  } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum } from 'class-validator';
 enum Priority {
   LOW = 'low',
   MEDIUM = 'medium',
