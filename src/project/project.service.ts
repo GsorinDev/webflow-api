@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Model, PipelineStage } from 'mongoose';
 import { Project } from '../project/interfaces/project.interface';
-import { CreateTicketDto } from '../ticket/dto/create-ticket.dto';
-import { Ticket } from '../ticket/interfaces/ticket.interface';
-import { EventTicket } from '../class/Event';
+import _ from 'lodash'
 import { CreateProjectDto } from './dto/create-project.dto';
 import { GroupUsersService } from '../group-users/group-users.service';
 import { CreateGroupUsersDto } from '../group-users/dto/create-group-users.dto';
@@ -28,5 +26,13 @@ export class ProjectService {
     createGroupUsersDto.project_id = project._id;
 
     await this.groupUserService.create(createGroupUsersDto, user);
+  }
+
+  async findAll(user) {
+    const getIdsProject = await this.groupUserService.getIdsProject(user);
+    const projectIdsToFind = _.uniq(
+      getIdsProject.map((project) => project.project_id),
+    );
+    return this.projectModel.find({ _id: { $in: projectIdsToFind } });
   }
 }

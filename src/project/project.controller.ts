@@ -1,6 +1,6 @@
 import {
   Body,
-  Controller,
+  Controller, Get,
   Post, Request,
   UseGuards,
   ValidationPipe
@@ -20,5 +20,11 @@ export class ProjectController {
     @Request() request: any,
   ) {
     return this.projectService.create(createProjectDto, request.user);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get()
+  async getAll(@Request() request: any) {
+    return this.projectService.findAll(request.user);
   }
 }

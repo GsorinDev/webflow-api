@@ -64,4 +64,11 @@ export class GroupUsersService {
       );
     }
   }
+
+  async getIdsProject(user) {
+    return this.groupUsersModel.find(
+      { 'users.user_id': user._id },
+      { project_id: 1, _id: 0 },
+    );
+  }
 }
