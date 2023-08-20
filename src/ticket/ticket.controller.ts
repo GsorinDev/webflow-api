@@ -50,8 +50,8 @@ export class TicketController {
 
   @UseGuards(AuthGuard)
   @Get()
-  async findAll(): Promise<Ticket[]> {
-    return this.ticketService.findAll();
+  async findAll(@Request() request: any): Promise<Ticket[]> {
+    return this.ticketService.findAll(request.user);
   }
 
   @UseGuards(AuthGuard)

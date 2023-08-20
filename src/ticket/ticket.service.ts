@@ -6,6 +6,9 @@ import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { EventTicket, TypeEvent } from '../class/Event';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { Project } from '../project/interfaces/project.interface';
+import { GroupUsers } from '../group-users/interfaces/group-users.interface';
+import _ from "lodash";
+import { GroupUsersService } from "../group-users/group-users.service";
 
 @Injectable()
 export class TicketService {
@@ -14,6 +17,7 @@ export class TicketService {
     private ticketModel: Model<Ticket>,
     @Inject('PROJECT_MODEL')
     private projectModel: Model<Project>,
+    private groupUsersService: GroupUsersService,
   ) {}
 
   async create(createTicketDto: CreateTicketDto, user: any): Promise<Ticket> {
@@ -38,7 +42,9 @@ export class TicketService {
       project_id: createdTicket.project_id,
     });
 
-    createdTicket.id = `${projectExist.title.substring(0, 4).toUpperCase()}-${id + 1}`;
+    createdTicket.id = `${projectExist.title.substring(0, 4).toUpperCase()}-${
+      id + 1
+    }`;
     return createdTicket.save();
   }
 
@@ -78,7 +84,11 @@ export class TicketService {
     return this.ticketModel.deleteOne({ _id: id });
   }
 
-  async findAll(): Promise<Ticket[]> {
-    return this.ticketModel.find().exec();
+  async findAll(user: any): Promise<Ticket[]> {
+    const getIdsProject = await this.groupUsersService.getIdsProject(user);
+    const projectIdsToFind = _.uniq(
+      getIdsProject.map((project) => project.project_id),
+    );
+    return this.ticketModel.find({ project_id: { $in: projectIdsToFind } });
   }
 }
