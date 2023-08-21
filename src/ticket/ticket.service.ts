@@ -51,14 +51,6 @@ export class TicketService {
   async update(id: string, updateTicketDto: UpdateTicketDto): Promise<Ticket> {
     const ticket = await this.ticketModel.findById(id).exec();
 
-    const projectExist = await this.projectModel
-      .findById(updateTicketDto.project_id)
-      .exec();
-
-    if (projectExist === null) {
-      throw new NotFoundException('Project not found');
-    }
-
     if (!ticket) {
       throw new NotFoundException('Ticket not found');
     }

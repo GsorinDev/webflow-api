@@ -16,8 +16,4 @@ export class UpdateTicketDto {
   @IsEnum(Priority)
   @IsNotEmpty()
   readonly priority: Priority;
-
-  @IsString()
-  @IsNotEmpty()
-  readonly project_id: string;
 }
